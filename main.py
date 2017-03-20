@@ -6,17 +6,20 @@ Created on Mon Feb 20 21:41:05 2017
 @author: Denes
 """
 
-import Preprocessing as p
-
-
-videoFile = '/Users/Denes/Developer/Video/s1/'
-frameDir = '/Users/Denes/Developer/Frames/'
-
-
+from Preprocessing import Preprocessing
+import cv2
 import glob
-files = glob.glob(videoFile + '*.mp4')
-print (files)
+import re
 
-#p.getVideoFrames(videoFile + 'an1.mp4', frameDir)
+
+videoFile = '/Volumes/Data/Diploma/Media/*'
+frameDir = '/Volumes/Data/Diploma/Media/Training/'
+preProcessing = Preprocessing()
+videoFiles = glob.glob(videoFile)
+for v in videoFiles:
+    preProcessing.getVideoFrames(v, frameDir)
+
+
+
 
 
