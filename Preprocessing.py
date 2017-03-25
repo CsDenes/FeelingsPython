@@ -15,22 +15,33 @@ from PIL import Image
 
 
 class Preprocessing:
+    
+    def imagePreprocessing(self, imageFile, imageDir):
+        image = cv2.imread(imageFile)
+        image = self.cropFace(image)
+        image = self.resize(image)
+        cv2.imwrite(imageDir+'testImage.png', image)
+        return image
+        
+        
     countFrames = 0
-    def getVideoFrames(self,videoFile,frameDir,cropFace = True, resize = True):
+    def getVideoFrames(self,videoFile,frameDir,cropFace = True, resize = True, framePerSec = 1):
         vidcap = cv2.VideoCapture(videoFile)
         success,image = vidcap.read()
         success = True
         while success:
             success,image = vidcap.read()
-            if success:
-                if cropFace:
-                    image = self.cropFace(image)
-                if resize:
-                    image = self.resize(image)
-                print( 'Read a new frame: ', success)
-                cv2.imwrite(frameDir +  re.search('/([a-z]*)[0-9]*.mp4',videoFile ).group(1) +   "%d.jpg" % self.countFrames, image) # save frame as JPEG file
-                print(self.countFrames)
-                self.countFrames += 1
+            if (self.countFrames % int(27 / framePerSec)) == 0:
+                if success:
+                    if cropFace:
+                        image = self.cropFace(image)
+                    if resize:
+                        image = self.resize(image)
+                    print( 'Read a new frame: ', success)
+                    cv2.imwrite(frameDir +  re.search('/([a-z]*)[0-9]*.mp4',videoFile ).group(1) +   "%d.jpg" % self.countFrames, image) # save frame as JPEG file
+                    print(self.countFrames)
+            self.countFrames += 1
+              
                 
 
     def resize(self, img,x=100,y=100):
@@ -48,6 +59,12 @@ class Preprocessing:
             face_color = img[q:q+s, p:p+r] #cropping face in  color image
         return face_color
     
+        
+        
+        
     
-  
+    
 
+
+
+    

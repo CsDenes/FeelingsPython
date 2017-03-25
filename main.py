@@ -16,10 +16,13 @@ videoFile = '/Volumes/Data/Diploma/Media/*'
 frameDir = '/Volumes/Data/Diploma/Media/Training/'
 preProcessing = Preprocessing()
 videoFiles = glob.glob(videoFile)
-for v in videoFiles:
-    preProcessing.getVideoFrames(v, frameDir)
+#for v in videoFiles:
+ #   preProcessing.getVideoFrames(v, frameDir)
 
 
 
+testImage = '/Users/Denes/Desktop/Dori.png'
+imageDir = '/Users/Denes/Desktop/'
 
+preProcessing.imagePreprocessing(testImage,imageDir)
 
